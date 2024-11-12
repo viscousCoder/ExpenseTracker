@@ -84,7 +84,7 @@ function AddExpenseDialog({ isOpen, onClose, groupUsers, groupId }) {
       return group;
     });
 
-    localStorage.setItem("groups", JSON.stringify(updatedGroups));
+    // localStorage.setItem("groups", JSON.stringify(updatedGroups));
     firebase.setDatafirebase("groups", updatedGroups);
 
     // Reset form and close dialog

@@ -20,7 +20,8 @@ function Group() {
   useEffect(() => {
     // const allGroups = JSON.parse(localStorage.getItem("groups")) || [];
     const allGroups = firebase.groupData;
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+    // const users = JSON.parse(localStorage.getItem("users")) || [];
+    const users = firebase.users;
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
     const selectedGroup = allGroups.find((grp) => grp.id === Number(groupId));
