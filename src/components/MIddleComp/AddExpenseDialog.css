@@ -1,0 +1,136 @@
+/* 
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-box {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 300px; 
+}
+
+.dialog-box h3 {
+  margin-top: 0;
+}
+
+.dialog-box input,
+.dialog-box textarea {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.dialog-box button {
+  margin-top: 10px;
+} */
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-box {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 400px; /* Adjust width as needed */
+  max-width: 90%; /* Responsive */
+}
+
+.dialog-box h3 {
+  margin-top: 0;
+}
+
+.dialog-box input,
+.dialog-box textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.dialog-box textarea {
+  resize: vertical;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dialog-box button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-button {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.close-button {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.close-button:hover {
+  background-color: #e53935;
+}
+
+.expense-list {
+  margin-top: 20px;
+}
+
+.expense-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f9fc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.expense-left h4 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.expense-left p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.expense-right p {
+  margin: 5px 0;
+  font-weight: bold;
+}
