@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    // Check if fields are empty or email is invalid before sending the request
+    // Check if fields are empty or email is invalid before sending the request to the firebase realtime database.
     if (!email) setEmailError("Please fill the field");
     if (!password) setPasswordError("Please fill the field");
     if (!validateEmail(email)) {

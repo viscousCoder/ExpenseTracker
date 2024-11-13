@@ -53,7 +53,7 @@ const Register = () => {
       if (newValue.length <= 10) {
         setFormData({ ...formData, phoneNumber: newValue }); // Limit to 10 digits
       }
-      // Don't show error once it's 10 digits
+      // Don't show error once it is of the 10 digits number
       if (newValue.length === 10) {
         setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: "" }));
       } else if (newValue.length !== value.length) {
