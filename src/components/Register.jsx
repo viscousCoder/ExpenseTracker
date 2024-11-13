@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFirebase } from "../context/Firebase";
 import "./Register.css"; // Assuming this is the CSS file for styling
+import { toast } from "react-toastify";
 
 const Register = () => {
   const firebase = useFirebase();
@@ -33,26 +34,14 @@ const Register = () => {
       }));
     }
 
-    // if (name === "phoneNumber") {
-    //   let newValue = value.replace(/\D/g, ""); // Remove non-numeric characters
-    //   if (newValue.length <= 10) {
-    //     setFormData({ ...formData, phoneNumber: newValue }); // Limit to 10 digits
-    //   }
-    //   // Don't show error once it's 10 digits
-    //   if (newValue.length === 10) {
-    //     setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: "" }));
-    //   } else if (newValue.length !== value.length) {
-    //     setErrors((prevErrors) => ({
-    //       ...prevErrors,
-    //       phoneNumber: "Please enter numbers only",
-    //     }));
-    //   }
-    // }
+    //phonenumber
     if (name === "phoneNumber") {
       let newValue = value.replace(/\D/g, ""); // Remove non-numeric characters
+      // console.log(newValue.length, "Amana");
       if (newValue.length <= 10) {
         setFormData({ ...formData, phoneNumber: newValue }); // Limit to 10 digits
       }
+
       // Don't show error once it is of the 10 digits number
       if (newValue.length === 10) {
         setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: "" }));
@@ -61,11 +50,22 @@ const Register = () => {
           ...prevErrors,
           phoneNumber: "Please enter numbers only",
         }));
+      } else if (newValue.length > 10) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          phoneNumber: "Only 10 digit number",
+        }));
+      } else if (newValue.length <= 10) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          phoneNumber: " 10 digit number",
+        }));
       }
     }
 
     if (name === "age") {
-      const ageValue = parseInt(value, 10);
+      // const ageValue = parseInt(value, 10);
+      const ageValue = Number(value, 10);
       if (isNaN(ageValue)) {
         setErrors((prevErrors) => ({
           ...prevErrors,
@@ -130,8 +130,11 @@ const Register = () => {
     }
 
     // Check if user already exists
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    if (users.find((user) => user.email === formData.email)) {
+    // const users = JSON.parse(localStorage.getItem("users")) || [];
+    const users = firebase.users || [];
+    // console.log(users.email);
+
+    if (users?.find((user) => user.email === formData.email)) {
       newErrors.email = "User already registered with this email";
       isValid = false;
     }
@@ -143,7 +146,7 @@ const Register = () => {
     const uniqueId = Date.now();
     const newUser = { ...formData, id: uniqueId };
     users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
+    // localStorage.setItem("users", JSON.stringify(users));
 
     firebase
       .signupUserWithEmailAndPassword(formData.email, formData.password)
@@ -152,14 +155,21 @@ const Register = () => {
           uid: user.uid,
           ...newUser,
         };
-        const allUsersData = [...firebase.users, userData];
+
+        //
+        const allUsersData =
+          firebase.users && Array.isArray(firebase.users)
+            ? [...users]
+            : [userData];
+
+        console.log(allUsersData, "user", users);
         firebase.userDetails("users", allUsersData);
       })
       .catch((error) => {
         console.error("Signup or user details saving failed:", error);
       });
 
-    alert("Registration successful!");
+    toast.success("Registration successful!");
     navigate("/");
   };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFirebase } from "../context/Firebase";
 import "./Login.css";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -54,31 +55,46 @@ const Login = () => {
 
     const users = firebase.users;
 
-    try {
-      const user = await firebase.signinUserWithEmailAndPassword(
-        email,
-        password
-      );
+    // try {
+    //   const user = await firebase.signinUserWithEmailAndPassword(
+    //     email,
+    //     password
+    //   );
 
-      if (user && user.email) {
+    //   if (user && user.email) {
+    //     const currentUser = users?.find((curr) => curr.email === user.email);
+
+    //     if (currentUser) {
+    //       localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    //       toast.success("Login Successfully");
+    //       navigate("/main");
+    //     } else {
+    //       toast.error("Invalid credentailas");
+    //     }
+    //   }
+    // } catch (error) {
+    //   if (error.code === "auth/invalid-credential") {
+    //     // Show only the general submit error message
+    //     setSubmitError("Invalid email or password");
+    //   } else {
+    //     toast.error("Login failed. Please try again.");
+    //   }
+    // }
+    firebase
+      .signinUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        // Prepare user data for storage
+        console.log("error", user.email, users);
         const currentUser = users?.find((curr) => curr.email === user.email);
-
-        if (currentUser) {
-          localStorage.setItem("currentUser", JSON.stringify(currentUser));
-          alert("Login Successful");
-          navigate("/main");
-        } else {
-          alert("User details not found.");
-        }
-      }
-    } catch (error) {
-      if (error.code === "auth/invalid-credential") {
-        // Show only the general submit error message
-        setSubmitError("Invalid email or password");
-      } else {
-        alert("Login failed. Please try again.");
-      }
-    }
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        toast.success("Successfully Login");
+        navigate("/main");
+        console.log("error2");
+      })
+      .catch((error) => {
+        toast.error("Invalid email or password");
+        console.error("Signup or user details saving failed:", error);
+      });
   };
 
   return (

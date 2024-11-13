@@ -36,7 +36,7 @@ function Group() {
       // Calculate the current user's balance in this group
       const balance = calculateUserBalance(currentUser.id, selectedGroup);
       setIsSettleDisabled(balance >= -1); // Disable if positive or zero
-      console.log("balance", balance, isSettleDisabled);
+      // console.log("balance", balance, isSettleDisabled);
     }
   }, [groupId, isExpenseOpen, isSettleOpen]);
 
@@ -69,7 +69,7 @@ function Group() {
   const handleExpense = () => {
     setIsExpenseOpen(!isExpenseOpen);
   };
-  console.log(isExpenseOpen, "isOpen");
+  // console.log(isExpenseOpen, "isOpen");
 
   if (!group) {
     return <p>Group not found</p>;

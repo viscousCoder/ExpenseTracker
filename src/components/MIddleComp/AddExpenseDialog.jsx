@@ -10,7 +10,7 @@ function AddExpenseDialog(props) {
   const [amount, setAmount] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  console.log(isOpen, "isOpen");
+  // console.log(isOpen, "isOpen", selectedUsers);
   // Get the current user from local storage
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const firebase = useFirebase();
@@ -56,10 +56,33 @@ function AddExpenseDialog(props) {
 
     // Calculate the per-user split amount
     const splitAmount = (totalAmount / numberOfUsers).toFixed(2);
-    const lentAmount = (
-      (totalAmount * (numberOfUsers - 1)) /
-      numberOfUsers
-    ).toFixed(2);
+    // const lentAmount = (
+    //   (totalAmount * (numberOfUsers - 1)) /
+    //   numberOfUsers
+    // ).toFixed(2);
+
+    const lentAmount = selectedUsers.find(
+      (user) => currentUser.id === user.value
+    )
+      ? splitAmount * (numberOfUsers - 1)
+      : splitAmount * numberOfUsers;
+
+    console.log(
+      splitAmount,
+      "isOpen1",
+      lentAmount,
+      "Amount",
+      amount,
+      totalAmount,
+      "total AMount",
+      typeof totalAmount,
+      "amount",
+      typeof amount,
+      "split",
+      typeof splitAmount,
+      "lentAmount",
+      typeof lentAmount
+    );
 
     const expense = {
       type: "expense",

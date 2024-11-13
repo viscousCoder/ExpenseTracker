@@ -13,7 +13,7 @@ function MainPage() {
 
   const firebase = useFirebase();
 
-  console.log("Aman", groups, firebase.groupData);
+  // console.log("Aman", groups, firebase.groupData);
   useEffect(() => {
     const fetchData = () => {
       // const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
@@ -81,12 +81,46 @@ function MainPage() {
     };
   };
 
-  const getFilteredUsers = () => {
+  // const getFilteredUsers = () => {
+  //   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  //   const path = location.pathname;
+
+  //   if (path === "/main" || path === "/main/create-group") {
+  //     return users;
+  //   } else if (path.includes("/main/group/")) {
+  //     const groupId = path.split("/").pop();
+  //     const selectedGroup = groups.find(
+  //       (group) => group.id === Number(groupId)
+  //     );
+
+  //     if (selectedGroup) {
+  //       const groupMembers = selectedGroup.selectedUsers
+  //         .map((userId) => users.find((user) => user.id === userId))
+  //         .filter(Boolean);
+
+  //       if (!groupMembers.some((member) => member.id === currentUser.id)) {
+  //         groupMembers.push(currentUser);
+  //       }
+  //       return groupMembers.map((user) => ({
+  //         ...user,
+  //         balance: calculateLentOwe(user.id, selectedGroup),
+  //       }));
+  //     }
+  //   }
+  //   return [];
+  // };
+
+  const getFilteredUserss = () => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const path = location.pathname;
 
     if (path === "/main" || path === "/main/create-group") {
-      return users;
+      const orderUser = users
+        .map((user) => user)
+        .sort((a, b) =>
+          a.id === currentUser.id ? -1 : b.id === currentUser.id ? 1 : 0
+        );
+      return orderUser;
     } else if (path.includes("/main/group/")) {
       const groupId = path.split("/").pop();
       const selectedGroup = groups.find(
@@ -98,15 +132,25 @@ function MainPage() {
           .map((userId) => users.find((user) => user.id === userId))
           .filter(Boolean);
 
+        // Ensure the currentUser is in the groupMembers if not already present
         if (!groupMembers.some((member) => member.id === currentUser.id)) {
           groupMembers.push(currentUser);
         }
-        return groupMembers.map((user) => ({
-          ...user,
-          balance: calculateLentOwe(user.id, selectedGroup),
-        }));
+
+        // Ssort the group tomake the cuirrent user at index 0
+        const orderedMembers = groupMembers
+          .map((user) => ({
+            ...user,
+            balance: calculateLentOwe(user.id, selectedGroup),
+          }))
+          .sort((a, b) =>
+            a.id === currentUser.id ? -1 : b.id === currentUser.id ? 1 : 0
+          );
+
+        return orderedMembers;
       }
     }
+
     return [];
   };
 
@@ -124,12 +168,19 @@ function MainPage() {
     localStorage.removeItem("selectedGroupId");
     handleGroupClick(null);
   }
+  function handleLogout() {
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("selectedGroupId");
+    handleGroupClick(null);
+  }
 
   return (
     <div className="main-page">
       <div className="left-column">
         <Link to="/" className="logoutBtn">
-          <button className="create-group-btn">LogOut</button>
+          <button className="create-group-btn" onClick={handleLogout}>
+            LogOut
+          </button>
         </Link>
         <Link to="/main" className="btn">
           <button className="create-group-btn mainBtn" onClick={handleClick}>
@@ -167,7 +218,7 @@ function MainPage() {
       </div>
 
       <div className="right-column">
-        {getFilteredUsers().map((user) => (
+        {getFilteredUserss().map((user) => (
           <div key={user.id} className="user-item">
             <div className="user-avatar">👤</div>
             <div className="user-info">

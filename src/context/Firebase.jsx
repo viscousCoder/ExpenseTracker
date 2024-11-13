@@ -60,16 +60,17 @@ export const FirebaseProvider = (props) => {
 
   //to send the group data
   function setDatafirebase(key, data) {
-    console.log(data, key, "key");
+    // console.log(data, key, "key");
     return set(ref(database, key), data);
   }
 
   //to signup the user with email and password
   function signupUserWithEmailAndPassword(email, password) {
+    console.log(email, password, "data here");
     return createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then((userCredential) => {
         // On successful signup, return the user data
-        console.log("User created successfully:", userCredential.user);
+        // console.log("User created successfully:", userCredential.user);
         return userCredential.user;
       })
       .catch((err) => console.log(err));
@@ -88,7 +89,7 @@ export const FirebaseProvider = (props) => {
   function signinUserWithEmailAndPassword(email, password) {
     return signInWithEmailAndPassword(firebaseAuth, email, password)
       .then((userCredential) => {
-        console.log(userCredential);
+        // console.log(userCredential);
         return userCredential.user;
       })
       .catch((err) => {
@@ -99,10 +100,11 @@ export const FirebaseProvider = (props) => {
 
   //to add user details in the database
   function userDetails(key, data) {
+    // console.log(data, key);
     return set(ref(database, key), data);
   }
 
-  console.log(groupData, "context", typeof groupData);
+  // console.log(groupData, "context", typeof groupData);
 
   return (
     <FirebaseContext.Provider

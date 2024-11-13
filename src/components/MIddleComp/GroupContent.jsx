@@ -1,8 +1,11 @@
 import { useState } from "react";
 import "./GroupContent.css";
+import { useFirebase } from "../../context/Firebase";
 
 function GroupContent({ expenses }) {
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const firebase = useFirebase();
+  // const users = JSON.parse(localStorage.getItem("users")) || [];
+  const users = firebase.users;
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   return (
@@ -46,11 +49,14 @@ function ExpenseCard({ expense, users, currentUser }) {
     : "Unknown User";
 
   // Calculate the split amount
-  const splitAmount = (
-    expense.lentAmount /
-    (expense.splitAmong.length - 1)
-  ).toFixed(2);
-  console.log("data", splitAmount);
+  // const splitAmount =
+  //   expense.splitAmong.length > 1
+  //     ? (expense.lentAmount / (expense.splitAmong.length - 1)).toFixed(2)
+  //     : expense.lentAmount;
+
+  const splitAmount = expense.paidAmount / expense.splitAmong.length;
+
+  // console.log("data", splitAmount);
   const splitAmountD = expense.lentAmount;
   // console.log("data", splitAmount);
 
