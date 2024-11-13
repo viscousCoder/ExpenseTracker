@@ -3,7 +3,8 @@ import Select from "react-select";
 import "./AddExpenseDialog.css";
 import { useFirebase } from "../../context/Firebase";
 
-function AddExpenseDialog({ isOpen, onClose, groupUsers, groupId }) {
+function AddExpenseDialog(props) {
+  const { isOpen, onClose, groupUsers, groupId } = props;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");

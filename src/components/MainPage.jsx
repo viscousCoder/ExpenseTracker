@@ -111,10 +111,19 @@ function MainPage() {
   };
 
   const handleGroupClick = (groupId) => {
+    if (groupId === null) {
+      setSelectedGroupId(null);
+      return null;
+    }
     setSelectedGroupId(groupId);
     localStorage.setItem("selectedGroupId", groupId); // Save selected group ID in localStorage
     navigate(`group/${groupId}`);
   };
+
+  function handleClick() {
+    localStorage.removeItem("selectedGroupId");
+    handleGroupClick(null);
+  }
 
   return (
     <div className="main-page">
@@ -123,10 +132,14 @@ function MainPage() {
           <button className="create-group-btn">LogOut</button>
         </Link>
         <Link to="/main" className="btn">
-          <button className="create-group-btn mainBtn">Main</button>
+          <button className="create-group-btn mainBtn" onClick={handleClick}>
+            Main
+          </button>
         </Link>
         <Link to="create-group" className="btn">
-          <button className="create-group-btn">Create Group</button>
+          <button className="create-group-btn" onClick={handleClick}>
+            Create Group
+          </button>
         </Link>
         <div className="group-list">
           {groups.map((group) => (

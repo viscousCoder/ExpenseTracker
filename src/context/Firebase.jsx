@@ -20,16 +20,6 @@ const firebaseConfig = {
   databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyATsdMBbcptrRtu8Bar7L0HvKmFkrKhA_0",
-//   authDomain: "expensetracker-1f81f.firebaseapp.com",
-//   projectId: "expensetracker-1f81f",
-//   storageBucket: "expensetracker-1f81f.firebasestorage.app",
-//   messagingSenderId: "896545695301",
-//   appId: "1:896545695301:web:00fa4f0168827b9daae52c",
-//   databaseURL: "https://expensetracker-1f81f-default-rtdb.firebaseio.com/",
-// };
-
 const firebaseApp = initializeApp(firebaseConfig);
 
 const database = getDatabase(firebaseApp);
@@ -86,13 +76,25 @@ export const FirebaseProvider = (props) => {
   }
 
   //to signin the user
+  // function signinUserWithEmailAndPassword(email, password) {
+  //   return signInWithEmailAndPassword(firebaseAuth, email, password)
+  //     .then((userCredential) => {
+  //       console.log(userCredential);
+  //       return userCredential.user;
+  //     })
+  //     .catch((err) => console.log(err, "hii"));
+  // }
+
   function signinUserWithEmailAndPassword(email, password) {
     return signInWithEmailAndPassword(firebaseAuth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
         return userCredential.user;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        // console.error("Error during sign-in:", err.message, err.code); // Better error message
+        throw err; // Re-throw to handle in calling function
+      });
   }
 
   //to add user details in the database

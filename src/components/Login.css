@@ -1,0 +1,30 @@
+.error-border {
+  border: 1px solid red;
+}
+
+.login-error-message {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 4px;
+}
+
+.submit-error {
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.input-container {
+  position: relative;
+  /* margin-bottom: 16px; */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.input-container {
+  width: 100%;
+}

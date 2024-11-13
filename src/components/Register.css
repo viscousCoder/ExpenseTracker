@@ -1,0 +1,20 @@
+.error-border {
+  border-color: red;
+}
+
+.register-error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.input-container {
+  /* margin-bottom: 16px; */
+  position: relative;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
