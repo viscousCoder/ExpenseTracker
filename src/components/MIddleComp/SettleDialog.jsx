@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import Select from "react-select";
 import "./SettleDialog.css";
 import { useFirebase } from "../../context/Firebase";
+/* eslint-disable react/prop-types */
 
 function SettleDialog({ isOpen, onClose, groupUsers, groupId, group }) {
   const [selectedUser, setSelectedUser] = useState(null);

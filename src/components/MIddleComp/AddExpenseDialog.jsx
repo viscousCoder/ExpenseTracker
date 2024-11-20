@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import Select from "react-select";
 import "./AddExpenseDialog.css";
 import { useFirebase } from "../../context/Firebase";
+/* eslint-disable react/prop-types */
 
 function AddExpenseDialog(props) {
   const { isOpen, onClose, groupUsers, groupId } = props;
@@ -10,8 +11,6 @@ function AddExpenseDialog(props) {
   const [amount, setAmount] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  // console.log(isOpen, "isOpen", selectedUsers);
-  // Get the current user from local storage
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const firebase = useFirebase();
 

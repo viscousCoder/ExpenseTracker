@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./GroupContent.css";
 import { useFirebase } from "../../context/Firebase";
+/* eslint-disable react/prop-types */
 
 function GroupContent({ expenses }) {
   const firebase = useFirebase();
